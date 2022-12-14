@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
@@ -48,18 +49,37 @@ class UserController extends Controller
     */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-        ]);
+        try {
         
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            $request->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'nivel_acesso' => 'required'
+            ]);
+            
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'nivel_acesso' => $request->nivel_acesso,
+                'password' => Hash::make($request->password),
+            ]);
 
-        return redirect()->route('users.index')->with('success','Usuário criado com Sucesso.');
+            $email_data = array(
+                'name' => $request['name'],
+                'email' => $request['email'],
+            );
+
+            Mail::send('welcome_email', $email_data, function ($message) use ($email_data) {
+                $message->to($email_data['email'], $email_data['name'])
+                    ->subject('Seja Bem-vindo(a) ao sistema do Matheus')
+                    ->from('matheuslher@gmail.com', 'Matheus');
+            });
+
+        } catch (Throwable $e) {
+            report($e);
+            return false;
+        }
+            return redirect()->route('users.index')->with('success','Usuário criado com Sucesso.');
     }
 
     /**
@@ -96,6 +116,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required',
+            'nivel_acesso' => 'required'
         ]);
 
         $validated = $request->validateWithBag('updatePassword', [

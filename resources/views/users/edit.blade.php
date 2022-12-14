@@ -8,7 +8,7 @@
                             @csrf
                             @method('PUT')
                             <div class="grid grid-cols-2 gap-6">
-                                <div class="grid grid-rows-2 gap-6">
+                                <div class="grid grid-rows-3 gap-6">
                                     <div>
                                         <x-input-label for="name" :value="__('Name')" />
                                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $user->name }}" required autofocus />
@@ -19,19 +19,32 @@
                                         <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{ $user->email }}" required autofocus />
                                         <x-input-error class="mt-2" :messages="$errors->get('email')" />
                                     </div>
+                                    <div>
+                                        <label for="nivel_acesso">Acesso</label>
+                                        <select id="nivel_acesso" name="nivel_acesso" class="form-control custom-select">
+                                            @if($user->nivel_acesso == 1)
+                                                <option value="0">Padrão</option>
+                                                <option value="1" selected>Admin</option>
+                                            @else
+                                                <option value="0" selected>Padrão</option>
+                                                <option value="1">Admin</option>
+                                            @endif
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="grid grid-rows-2 gap-6">
+                                <div>
                                     <div>
                                         <x-input-label for="password" :value="__('Nova Senha')" />
                                         <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
                                         <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
                                     </div>
                             
-                                    <div>
+                                    <div class="mt-4">
                                         <x-input-label for="password_confirmation" :value="__('Confirmar Senha')" />
                                         <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
                                         <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
                                     </div>
+
                                 </div> 
                             </div>
                             <div class="flex items-center gap-4 mt-2">

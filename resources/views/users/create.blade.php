@@ -19,6 +19,14 @@
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
 
+                            <div>
+                                <label for="nivel_acesso">Acesso</label>
+                                <select id="nivel_acesso" name="nivel_acesso" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                                    <option value="0">Padrão</option>
+                                    <option value="1">Admin</option>
+                                </select>
+                            </div>
+
                             <div class="mt-4">
                                 <x-input-label for="password" :value="__('Senha')" />
 

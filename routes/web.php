@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Route::get('/users', [UserController::class,'index'])->name('users.search');
     Route::resource('/users', UserController::class)->only(['index', 'create', 'store', 'destroy', 'edit', 'update', 'show']);
+    Route::resource('/customers', CustomerController::class)->only(['index', 'create', 'store', 'destroy', 'edit', 'update', 'show', 'status']);
+    Route::get('customers/{id}/status', [CustomerController::class, 'status'])->name('customers.status');
 });
 
 require __DIR__.'/auth.php';
