@@ -56,40 +56,45 @@
                             </thead>
                             <tbody>
                                 @foreach ($customers as $customer)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                                        {{$customer->id}}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {{$customer->nome}}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{$customer->email}}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{$customer->cep}}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{$customer->cnpj ? $customer->cnpj : "Não existe CNPJ" }} 
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{$customer->status ? $customer->status = "Habilitado" : "Desabilitado"}}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ date_format($customer->created_at, 'd/m/Y') }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <form action="{{ route('customers.destroy',$customer->id) }}" method="Post" onsubmit="return submitForm(this);">
-                                            <a class="inline-flex items-center px-2 py-1 bg-white border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150" href="{{ route('customers.show',$customer->id) }}">Visualizar</a>
-                                            <a class="inline-flex items-center px-2 py-1 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" href="{{ route('customers.edit',$customer->id) }}">Editar</a>
-                                            <a class="inline-flex items-center px-2 py-1 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" href="{{ route('customers.status',$customer->id) }}">Atualizar Status</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center px-2 py-1 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Deletar</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                            {{$customer->id}}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{$customer->nome}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$customer->email}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$customer->cep}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{$customer->cnpj ? $customer->cnpj : "Não existe CNPJ" }} 
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{-- {{$customer->status ? $customer->status = "Habilitado" : "Desabilitado"}} --}}
+                                            @if($customer->status == 1)
+                                                <p class="one">Habilitado</p>
+                                            @else
+                                                <p class="two">Desabilitado</p>
+                                            @endif
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ date_format($customer->created_at, 'd/m/Y') }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <form action="{{ route('customers.destroy',$customer->id) }}" method="Post" onsubmit="return submitForm(this);">
+                                                <a class="inline-flex items-center px-2 py-1 bg-white border border-transparent rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150" href="{{ route('customers.show',$customer->id) }}">Visualizar</a>
+                                                <a class="inline-flex items-center px-2 py-1 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150" href="{{ route('customers.edit',$customer->id) }}">Editar</a>
+                                                <a class="inline-flex items-center px-2 py-1 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 active:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition ease-in-out duration-150" href="{{ route('customers.status',$customer->id) }}">Atualizar Status</a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-flex items-center px-2 py-1 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Deletar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -117,6 +122,23 @@
             });
             return false;
         }
-
     </script>
+    <style>
+        p.one {
+            background-color: green;
+            color: white;
+            padding: 5px 13px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        p.two {
+            background-color: #dc2626;
+            color: white;
+            padding: 5px 13px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
 </x-app-layout>

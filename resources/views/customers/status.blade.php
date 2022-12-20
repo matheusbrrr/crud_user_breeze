@@ -4,7 +4,7 @@
             <x-success-status class="mb-4" :status="session('message')"/>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                        <form action="{{ route('customers.updateStatus',$customer->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('customers.updateStatus', ['customer' => $customer->id]) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="grid grid-cols-2 gap-6">
@@ -26,20 +26,6 @@
                                     </select>
                                 </div>
                             </div>
-                            {{-- <div class="grid grid-cols-2 gap-6">
-                                <div class="grid grid-rows-2 gap-6">
-                                    <div>
-                                        <x-input-label for="name" :value="__('Name')" />
-                                        <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $customer->name }}" required autofocus />
-                                        <x-input-error class="mt-2" :messages="$errors->get('name')" />
-                                    </div>
-                                    <div>
-                                        <x-input-label for="email" :value="__('Email')" />
-                                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{ $customer->email }}" required autofocus />
-                                        <x-input-error class="mt-2" :messages="$errors->get('email')" />
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="flex items-center gap-4 mt-2">
                                 <x-primary-button>{{ __('Salvar') }}</x-primary-button>
                             </div>

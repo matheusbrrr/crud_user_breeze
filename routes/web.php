@@ -30,8 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     // Route::get('/users', [UserController::class,'index'])->name('users.search');
     Route::resource('/users', UserController::class)->only(['index', 'create', 'store', 'destroy', 'edit', 'update', 'show']);
-    Route::resource('/customers', CustomerController::class)->only(['index', 'create', 'store', 'destroy', 'edit', 'update', 'show', 'status']);
+    Route::resource('/customers', CustomerController::class)->only(['index', 'create', 'store', 'destroy', 'edit', 'update', 'show']);
     Route::get('customers/{id}/status', [CustomerController::class, 'status'])->name('customers.status');
+    Route::post('customers/{customer}/status', [CustomerController::class, 'updateStatus'])->name('customers.updateStatus');
 });
 
 require __DIR__.'/auth.php';

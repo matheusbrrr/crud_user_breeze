@@ -116,7 +116,7 @@ class CustomerController extends Controller
         return view('customers.edit',compact('customer'));
     }
 
-    public function status(Customer $customer)
+    public function status(Customer $customer, $id)
     {
         return view('customers.status',compact('customer'));
     }
@@ -147,15 +147,20 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')->with('success','Cliente atualizado com sucesso!');
     }
 
-    public function updateStatus(Request $request, Customer $customer)
+    public function updateStatus(Request $request, Customer $customer, $id)
     {
         $request->validate([
             'status' => 'required',
             'email'  => 'required'
         ]);
 
-        $customer->status = 1;
-        $customer->save();
+        if($customer->status == 0){
+            $customer->status = 1;
+            $customer->save();
+        }else{
+            $customer->status = 0;
+            $customer->save();
+        }
 
         $email_data = array(
             'nome' => $request['nome'],
